@@ -8,6 +8,7 @@
 ```sh
 $ git clone git://github.com/ssjr/instagram_backup.git instagram-backup
 $ cd instagram-backup
+$ gem install instagram
 $ export INSTAGRAM_CLIENT_ID=your_client_id
 $ export INSTAGRAM_CLIENT_SECRET=your_client_secret
 $ ./main.rb userName
