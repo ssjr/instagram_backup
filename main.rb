@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 
 require 'instagram'
+require 'fileutils'
+require 'open-uri'
 
 unless ARGV[0]
   puts 'An username must be provided'
@@ -17,8 +19,6 @@ end
 
 @username = ARGV[0]
 
-PHOTO_CURL_PATH = "~/instagram_#{@username}/photos/"
-VIDEO_CURL_PATH = "~/instagram_#{@username}/videos/"
 all_medias = []
 all_videos = []
 max_id = nil
@@ -63,15 +63,22 @@ end
 puts 'All medias archived.'
 puts 'Creating folders'
 
-system "mkdir -pv #{PHOTO_CURL_PATH}"
-system "mkdir -pv #{VIDEO_CURL_PATH}"
+default_dir = [Dir.home, "instagram_#{@username}"]
+
+photos_path = [default_dir, 'photos'].flatten
+photos_path = FileUtils.mkdir_p(File.join(*photos_path))[0]
+
+videos_path = [default_dir, 'videos'].flatten
+videos_path = FileUtils.mkdir_p(File.join(videos_path))[0]
 
 puts "Downloading all photos (#{all_medias.count})"
 
 all_medias.each do |media_item|
   media_url = media_item.images.standard_resolution.url
   media_name = media_url.split('/').last
-  system "curl '#{media_url}' > #{PHOTO_CURL_PATH}#{media_name}"
+  File.open(File.join(photos_path, media_name), 'wb') do |f|
+    f.write(open(media_url).read)
+  end
 end
 
 puts "Downloading all videos (#{all_videos.count})"
@@ -79,7 +86,9 @@ puts "Downloading all videos (#{all_videos.count})"
 all_videos.each do |media_item|
   media_url = media_item.videos.standard_resolution.url
   media_name = media_url.split('/').last
-  system "curl '#{media_url}' > #{VIDEO_CURL_PATH}#{media_name}"
+  File.open(File.join(videos_path, media_name), 'wb') do |f|
+    f.write(open(media_url).read)
+  end
 end
 
 puts "ALL DONE :D"

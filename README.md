@@ -18,7 +18,7 @@ All medias will be found at `~/instagram_[username]`
 
 ## ToDo
 
-- [ ] Replace `curl` and `mkdir` with Ruby
+- [x] Replace `curl` and `mkdir` with Ruby
 
 ---------------------
 The MIT License (MIT)
