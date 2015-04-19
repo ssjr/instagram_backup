@@ -76,19 +76,25 @@ puts "Downloading all photos (#{all_medias.count})"
 all_medias.each do |media_item|
   media_url = media_item.images.standard_resolution.url
   media_name = media_url.split('/').last
+  print '.'
   File.open(File.join(photos_path, media_name), 'wb') do |f|
     f.write(open(media_url).read)
   end
 end
+
+puts ''
 
 puts "Downloading all videos (#{all_videos.count})"
 
 all_videos.each do |media_item|
   media_url = media_item.videos.standard_resolution.url
   media_name = media_url.split('/').last
+  print '.'
   File.open(File.join(videos_path, media_name), 'wb') do |f|
     f.write(open(media_url).read)
   end
 end
+
+puts ''
 
 puts "ALL DONE :D"
