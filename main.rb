@@ -42,8 +42,8 @@ end
 
 def is_correct_user?(username)
   puts "Is /#{username} the correct user? (y/n)"
-  awser = STDIN.gets.chomp
-  ['Y', 'y', 'yes', 'YES'].include?(awser)
+  answer = STDIN.gets.chomp
+  ['Y', 'y', 'yes', 'YES'].include?(answer)
 end
 
 user_id = search_for_user_id
